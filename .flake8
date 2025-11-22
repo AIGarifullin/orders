@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 79
+ignore = W503, W504
+per-file-ignores =
+    settings*.py:E501
+exclude =
+    .git,
+    __pycache__,
+    .tox,
+    .eggs,
+    *.egg,
+    .venv,
+    venv,
+    migrations,
+    __init__.py
