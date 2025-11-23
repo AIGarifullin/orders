@@ -162,7 +162,7 @@ class OrderUploadSerializer(serializers.Serializer):
             if orders_to_create:
                 Order.objects.bulk_create(orders_to_create)
                 logger.info(
-                    f'Создано {len(orders_to_create)} новых заказов).'
+                    f'Создано {len(orders_to_create)} новых заказов.'
                 )
 
             if orders_to_update:

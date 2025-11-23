@@ -44,13 +44,13 @@ class OrderUploadStatsViewSet(ViewSet):
     def upload_orders(self, request):
         """Метод для загрузки данных о заказах."""
         logger.info(
-            f'Получен POST запрос на /api/orders/upload от {request.user}'
+            f'Получен POST запрос на /api/orders/upload от {request.user}.'
         )
         logger.debug(f'Данные запроса: {request.data}')
         serializer = OrderUploadSerializer(data=request.data)
         if serializer.is_valid():
             result: Dict[str, Any] = serializer.save()  # type: ignore
-            logger.info('Заказ(ы) успешно сохранены в базу')
+            logger.info('Заказ(ы) успешно сохранены в базу.')
             return Response(
                 {'message': 'Заказ(ы) успешно загружены/обновлены.',
                  'statistics': {
@@ -60,7 +60,7 @@ class OrderUploadStatsViewSet(ViewSet):
                  }},
                 status=status.HTTP_201_CREATED
             )
-        logger.warning(f'Ошибки валидации: {serializer.errors}')
+        logger.warning(f'Ошибки валидации: {serializer.errors}.')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=('get',), url_path='stats')
@@ -71,7 +71,7 @@ class OrderUploadStatsViewSet(ViewSet):
         logger.info(f'Получен запрос статистики для пользователя: {username}.')
 
         if not username:
-            logger.warning('Запрос статистики без параметра user')
+            logger.warning('Запрос статистики без параметра user.')
             route = '/api/orders/stats?user=username'
             return Response(
                 {'error': f'Параметр user обязателен. Используйте: {route}.'},
