@@ -1,4 +1,5 @@
 import logging
+from typing import Any, Dict
 
 from django.db.models import Avg, Count, Sum
 from drf_spectacular.utils import (extend_schema, extend_schema_view,
@@ -48,7 +49,7 @@ class OrderUploadStatsViewSet(ViewSet):
         logger.debug(f'Данные запроса: {request.data}')
         serializer = OrderUploadSerializer(data=request.data)
         if serializer.is_valid():
-            result = serializer.save()
+            result: Dict[str, Any] = serializer.save()  # type: ignore
             logger.info('Заказ(ы) успешно сохранены в базу')
             return Response(
                 {'message': 'Заказ(ы) успешно загружены/обновлены.',

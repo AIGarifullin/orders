@@ -61,15 +61,14 @@ python3 manage.py runserver
 
 После запуска сервера доступна интерактивная документация:
 
-Swagger UI: http://localhost:8000/schema/swagger/
-
-ReDoc: http://localhost:8000/schema/redoc/
+* **Swagger UI**: [http://localhost:8000/schema/swagger/](http://localhost:8000/schema/swagger/)
+* **ReDoc**: [http://localhost:8000/schema/redoc/](http://localhost:8000/schema/redoc/)
 
 ## API маршруты
 
 ### 📤 Загрузка заказов
 
-**POST** http://localhost:8000/api/orders/upload/
+**POST** [http://localhost:8000/api/orders/upload/](http://localhost:8000/api/orders/upload/)
 
 Загрузка и обновление заказов пользователя. При повторной загрузке заказа с тем же `order_number` происходит обновление.
 
@@ -118,7 +117,7 @@ ReDoc: http://localhost:8000/schema/redoc/
 
 ### 📊 Статистика заказов
 
-**GET** http://localhost:8000/api/orders/stats/?user=test_seller
+**GET** [http://localhost:8000/api/orders/stats/?user=test_seller](http://localhost:8000/api/orders/stats/?user=test_seller)
 
 Получение статистики по заказам пользователя. Параметры: `user` (обязательный) - имя пользователя.
 
