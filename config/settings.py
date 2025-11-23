@@ -19,13 +19,14 @@ ALLOWED_HOSTS = getenv('ALLOWED_HOSTS', '*').split(', ')
 INSTALLED_APPS = [
     # Библиотеки
     'rest_framework',
-    # 'rest_framework_simplejwt',
+    'rest_framework_simplejwt',
     'django_filters',
     'drf_spectacular',
     # 'drf_yasg',
 
     # Приложения
     'api.apps.ApiConfig',
+    'core.apps.CoreConfig',
     'orders.apps.OrdersConfig',
 
     # Настройки
@@ -133,8 +134,8 @@ SIMPLE_JWT = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'EyeTalkOnline API',
-    'DESCRIPTION': 'Documentation for EyeTalkOnline API',
+    'TITLE': 'Order API',
+    'DESCRIPTION': 'Documentation for Order API',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'SWAGGER_UI_SETTINGS': {
@@ -142,5 +143,40 @@ SPECTACULAR_SETTINGS = {
     },
     'COMPONENT_SPLIT_REQUEST': True,
     'COMPONENT_SPLIT_PATH': ['module'],
-    'SCHEMA_PATH_PREFIX': '/api/v1/'
+    'SCHEMA_PATH_PREFIX': '/api/s'
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/orders.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'orders': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
 }

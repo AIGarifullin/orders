@@ -1,12 +1,14 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
+from orders.views import OrderUploadStatsViewSet
 
-v1_router = DefaultRouter()
+router = DefaultRouter()
 
-# v1_router.register('access/check', User_s_teamsViewSet,
-#                    basename='user_s_teams')
+router.register(r'orders', OrderUploadStatsViewSet,
+                basename='order-upload-stats')
+
 
 urlpatterns = [
-    path('', include(v1_router.urls)),
+    path('', include(router.urls)),
 ]
