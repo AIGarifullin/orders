@@ -13,5 +13,5 @@ app.autodiscover_tasks()
 
 @app.task(bind=True, ignore_result=True)
 def debug_task(self):
-    """Метод для отладки с использованием тестовой задачи."""
+    """Метод отладки с использованием тестовой задачи."""
     print(f'Request: {self.request!r}')
