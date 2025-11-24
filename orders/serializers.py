@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from core.constants import OrderConstants
 
-from .models import User, Order, OrderItem
+from .models import DailyOrderStats, Order, OrderItem, User
 
 
 logger = logging.getLogger('orders')
@@ -42,7 +42,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderUploadSerializer(serializers.Serializer):
-    """Сериализатор для загрузки заказов."""
+    """Сериализатор для модели OrderUpload."""
 
     user = serializers.CharField(max_length=OrderConstants.MAX_USERNAME_LENGTH)
     orders = OrderSerializer(many=True)
@@ -197,7 +197,7 @@ class OrderUploadSerializer(serializers.Serializer):
 
 
 class UserStatsSerializer(serializers.Serializer):
-    """Сериализатор для статистики пользователя."""
+    """Сериализатор для модели UserStats."""
 
     user = serializers.CharField(
         max_length=OrderConstants.MAX_USERNAME_LENGTH
@@ -208,7 +208,7 @@ class UserStatsSerializer(serializers.Serializer):
         decimal_places=OrderConstants.MAX_DECIMAL_PLACES
     )
     avg_order_value = serializers.DecimalField(
-        max_digits=OrderConstants.MAX_TOTAL_AMOUNT,
+        max_digits=OrderConstants.MAX_PRICE_DIGITS,
         decimal_places=OrderConstants.MAX_DECIMAL_PLACES
     )
 
@@ -227,3 +227,12 @@ class UserStatsSerializer(serializers.Serializer):
                 'Выручка не может быть отрицательной.'
             )
         return value
+
+
+class DailyStatsSerializer(serializers.ModelSerializer):
+    """Сериализатор для ежедневной статистики."""
+
+    class Meta:
+        model = DailyOrderStats
+        fields = ('date', 'total_users', 'total_orders',
+                  'total_revenue', 'avg_order_value', 'created_at')

@@ -9,8 +9,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from .models import User, Order
-from .serializers import OrderUploadSerializer, UserStatsSerializer
+from .models import DailyOrderStats, Order, User
+from .serializers import (DailyStatsSerializer, OrderUploadSerializer,
+                          UserStatsSerializer)
 
 logger = logging.getLogger('orders')
 
@@ -105,8 +106,19 @@ class OrderUploadStatsViewSet(ViewSet):
         logger.info(
             f'Сделана статистика для {username}: '
             f'{stats_data["orders_count"]} заказа(ов), '
-            f'выручка: {stats_data["total_revenue"]:.2f}, '
+            f'общая выручка: {stats_data["total_revenue"]:.2f}, '
             f'средний чек: {stats_data["avg_order_value"]:.2f}.'
         )
 
+        return Response(serializer.data)
+
+
+class DailyStatsViewSet(ViewSet):
+    """ViewSet для просмотра ежедневной статистики."""
+
+    @action(detail=False, methods=['get'])
+    def daily_stats(self, request):
+        """Метод для получение ежедневной статистики."""
+        stats = DailyOrderStats.objects.all().order_by('-date')[:30]
+        serializer = DailyStatsSerializer(stats, many=True)
         return Response(serializer.data)

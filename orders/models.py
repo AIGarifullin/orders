@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 
 from core.constants import OrderConstants
@@ -87,3 +89,44 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class DailyOrderStats(models.Model):
+    """Модель DailyOrderStats (хранения ежедневной статистики заказов)."""
+
+    date = models.DateField(
+        verbose_name='Дата статистики',
+        unique=True
+    )
+    total_users = models.PositiveIntegerField(
+        verbose_name='Всего пользователей',
+        default=0
+    )
+    total_orders = models.PositiveIntegerField(
+        verbose_name='Всего заказов',
+        default=0
+    )
+    total_revenue = models.DecimalField(
+        verbose_name='Общая выручка',
+        max_digits=OrderConstants.MAX_TOTAL_AMOUNT,
+        decimal_places=OrderConstants.MAX_DECIMAL_PLACES,
+        default=Decimal('0')
+    )
+    avg_order_value = models.DecimalField(
+        verbose_name='Средний чек',
+        max_digits=OrderConstants.MAX_PRICE_DIGITS,
+        decimal_places=OrderConstants.MAX_DECIMAL_PLACES,
+        default=Decimal('0')
+    )
+    created_at = models.DateTimeField(
+        verbose_name='Дата создания',
+        auto_now_add=True
+    )
+
+    class Meta:
+        verbose_name = 'Ежедневная статистика заказов'
+        verbose_name_plural = 'Ежедневная статистика заказов'
+        ordering = ('-date',)
+
+    def __str__(self):
+        return f'Статистика за {self.date}'

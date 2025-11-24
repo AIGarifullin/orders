@@ -2,6 +2,7 @@ from datetime import timedelta
 from os import getenv
 from pathlib import Path
 
+from celery.schedules import crontab
 from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
 
@@ -179,4 +180,18 @@ LOGGING = {
             'propagate': True,
         },
     },
+}
+
+CELERY_BROKER_URL = getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = getenv('CELERY_RESULT_BACKEND')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+
+CELERY_BEAT_SCHEDULE = {
+    'daily-order-stats': {
+        'task': 'orders.tasks.daily_order_stats',
+        'schedule': crontab(hour=0, minute=0)
+    }
 }
