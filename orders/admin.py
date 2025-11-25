@@ -54,7 +54,7 @@ class OrderItemAdmin(admin.ModelAdmin):
     search_fields = ('sku', 'name', 'order__order_number',
                      'quantity', 'price')
     list_filter = ('order__user', 'order')
-    list_display_links = ('name',)
+    list_display_links = ('sku',)
 
     def total_price(self, obj):
         """Метод расчета общей стоимости позиции."""

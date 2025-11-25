@@ -125,7 +125,7 @@ class DailyOrderStats(models.Model):
 
     class Meta:
         verbose_name = 'Ежедневная статистика заказов'
-        verbose_name_plural = 'Ежедневная статистика заказов'
+        verbose_name_plural = 'Ежедневные статистики заказов'
         ordering = ('-date',)
 
     def __str__(self):
